@@ -1,0 +1,77 @@
+---
+openapi: 3.0.1
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/reviews":
+    get:
+      summary: Gets all reviews
+      tags:
+      - Reviews
+      responses:
+        '200':
+          description: All
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    review:
+                      type: number
+                      format: float
+                    created_at:
+                      type: string
+                      format: date_time
+                    updated_at:
+                      type: string
+                      format: date_time
+    post:
+      summary: Creates a review
+      tags:
+      - Reviews
+      security:
+      - Bearer: {}
+      parameters: []
+      responses:
+        '201':
+          description: review created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  rating:
+                    type: number
+                    format: float
+        '422':
+          description: invalid request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                review:
+                  type: number
+                  format: float
+              required:
+              - name
+              - review
+servers:
+- url: https://{defaultHost}
+  variables:
+    defaultHost:
+      default: www.example.com

@@ -1,0 +1,23 @@
+version: '3.7'
+services:
+  db:
+    image: 'postgres:latest'
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: postgres
+  client:
+    build:
+      context: ./client
+    ports:
+      - "3000:3000"
+  server:
+    build:
+      context: ./server
+    depends_on:
+      - db
+    ports:
+      - "3001:3001"
+
+volumes:
+  postgres:
